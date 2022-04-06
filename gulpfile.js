@@ -9,10 +9,15 @@ const rename = require('gulp-rename')
 const cleanCSS = require('gulp-clean-css');
 const sourcemaps = require('gulp-sourcemaps');
 
-const jsSourceFolder = 'themes/ee/cp/js/src/'
-const jsVendorFolder = 'themes/ee/cp/js/src/vendor/'
+const jsSourceFolder = 'themes/user/site/haunted/asset/js/src/'
+const jsVendorFolder = 'themes/user/site/haunted/asset/js/src/lib/'
 const jsBuildFolder = 'themes/ee/cp/js/build/'
-const rteRedactorFolder = 'themes/ee/asset/javascript/src/fields/rte/redactor/';
+const rteRedactorFolder = 'themes/ee/asset/javascript/src/fields/rte/redactor/'
+const jsThemeDir = 'themes/user/site/haunted/asset/js/src/'
+const cssThemeDir = 'themes/user/site/haunted/asset/style/'
+const sassThemeDir = 'themes/user/site/haunted/asset/style/scss/'
+const npmsrc   = 'node_modules/'
+
 
 function cleanJs() {
 	return del([jsBuildFolder + '**/*'])
@@ -30,7 +35,7 @@ function buildTypeScript() {
 }
 
 function buildJavascript() {
-	return src([jsSourceFolder + '/**/*.js', jsSourceFolder + '/**/*.jsx', '!' + jsVendorFolder + '**/*'])
+	return src([jsThemeDir + '/**/*.js', jsThemeDir + '/**/*.jsx'])
 		.pipe(babel({
 			presets: [
 				'@babel/env',
@@ -56,7 +61,7 @@ function buildRteRedactorCss() {
 
 function buildRteRedactorJs() {
 	return src([rteRedactorFolder + 'redactor.js', rteRedactorFolder + 'plugins/**/*.js'])
-		.pipe(sourcemaps.init())	
+		.pipe(sourcemaps.init())
 		.pipe(concat('redactor.min.js'))
 		.pipe(uglify())
 		.pipe(sourcemaps.write('./'))
